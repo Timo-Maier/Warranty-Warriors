@@ -5,13 +5,14 @@
   "dependencies": {
     "@cap-js/hana": "^2",
     "@sap/cds": "^9",
-    "express": "^4",
-    "@sap/xssec": "^4"
+    "@sap/xssec": "^4",
+    "express": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2",
     "@sap/cds-dk": "^9",
-    "cds-plugin-ui5": "^0.13.0"
+    "cds-plugin-ui5": "^0.13.0",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "cds-serve",
@@ -33,8 +34,12 @@
       "db": {
         "[test]": {
           "kind": "sqlite",
-          "credentials": { "url": ":memory:" },
-          "data": ["test/data"]
+          "credentials": {
+            "url": ":memory:"
+          },
+          "data": [
+            "test/data"
+          ]
         }
       }
     }
