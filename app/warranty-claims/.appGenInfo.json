@@ -1,0 +1,28 @@
+{
+  "generationParameters": {
+    "generationDate": "Tue Apr 28 2026 11:41:40 GMT+0200 (Central European Summer Time)",
+    "generatorPlatform": "CLI",
+    "serviceType": "Local CAP",
+    "metadataFilename": "",
+    "serviceUrl": "http://localhost:4004/odata/v4/claim/",
+    "appName": "warranty-claims",
+    "appTitle": "Application Title",
+    "appDescription": "Manage warranty claims",
+    "appNamespace": "",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.136.7",
+    "enableEslint": true,
+    "enableTypeScript": false,
+    "showMockDataInfo": false,
+    "generatorVersion": "1.22.0",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "WarrantyClaims"
+      }
+    ],
+    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/warranty-claims/webapp/index.html"
+  }
+}
