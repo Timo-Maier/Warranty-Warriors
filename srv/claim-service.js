@@ -15,10 +15,10 @@ class ClaimService extends cds.ApplicationService {
         if (!caseDesc) return req.reject(400, 'caseDescription filter is required');
 
         const mhRows = await SELECT.from(Reports)
-            .where({ caseDescription: caseDesc, matNrMH: { '!=': 'PWYEMA1000' }, claimsCount: { '!=': '#NV'} });
+            .where({ caseDescription: caseDesc, matNrMH: { '!=': 'PWYEMA1000' } });
 
         const custRows = await SELECT.from(Reports)
-            .where({ caseDescription: caseDesc, matNrCust: { '!=': '#' }, claimsCount: { '!=': '#NV'} });
+            .where({ caseDescription: caseDesc, matNrCust: { '!=': '#' } });
 
         const mhSum = mhRows.reduce((sum, r) => sum + (r.claimsCount || 0), 0);
 
