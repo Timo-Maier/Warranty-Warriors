@@ -11,6 +11,7 @@ function createSummarizeTool() {
 
     return tool(
         async ({ longTexts }) => {
+            console.log(`Summarizing ${longTexts.length} long texts from claims`);
             const { OrchestrationClient } = await import('@sap-ai-sdk/langchain');
             const { HumanMessage, SystemMessage } = await import('@langchain/core/messages');
 
