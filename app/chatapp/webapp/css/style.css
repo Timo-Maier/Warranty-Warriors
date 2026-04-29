@@ -22,11 +22,14 @@
 
 /* ── Scrollable message area ───────────────────────────────── */
 .chatContainer {
-    height: 100%;
-    overflow-y: auto;
     padding: 1.25rem 1.5rem;
     box-sizing: border-box;
     background-color: #f0f7f0;
+}
+
+.chatContainer > .sapMScrollContScroll {
+    display: flex;
+    flex-direction: column;
 }
 
 .chatMessageList {

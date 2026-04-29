@@ -12,7 +12,7 @@ function createAnalyzeDataTool() {
     const { tool } = require('@langchain/core/tools');
 
     return tool(
-        async ({ scope, caseDescription }) => {
+        async ({ scope, caseDescription, queryObject }) => {
             console.log(`Analyzing data.`);
 
             const { OrchestrationClient } = await import('@sap-ai-sdk/langchain');
@@ -31,9 +31,9 @@ function createAnalyzeDataTool() {
                 new HumanMessage(`Write a prompt that analyzes data that stores a long text description, country and production date of a warranty claim based on this scope. Output only the prompt itself and nothing else: ${scope}`),
             ]);
             const scopedPrompt = getScopedPrompt.content;
-
-            const { EnrichedClaims } = cds.entities("warranty.warriors");;
-            const claims = await SELECT.from(EnrichedClaims).where({caseDescription: caseDescription}).limit(1000);
+            const { EnrichedClaims } = cds.entities("warranty.warriors");
+            const formattedQueryObject = queryObject ? JSON.parse(queryObject) : {};
+            const claims = await SELECT.from(EnrichedClaims).where({caseDescription: caseDescription}).where(formattedQueryObject).limit(1000);
             if (!claims) {
                 throw new Error('No claims currently exist for this case description. Run fetch_long_text_from_material_numbers to get the claims data first.');
             }
@@ -54,10 +54,12 @@ function createAnalyzeDataTool() {
                 scope: z
                     .string()
                     .describe('Description what the analysis should focus on.'),
-                
                 caseDescription: z
                     .string()
                     .describe('Case Description for which the material numbers should be fetched.'),
+                queryObject: z
+                    .string()
+                    .describe('CAP CQN query object to filter the claims which should be analyzed. This parameter is optional and should not be filled if no query is required.'),
             }),
         }
     );

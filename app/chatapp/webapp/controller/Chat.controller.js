@@ -59,13 +59,10 @@ function (Controller, JSONModel) {
 
         _scrollToBottom: function () {
             setTimeout(() => {
-                const oList = this.byId("messageList");
-                if (oList) {
-                    const oDomRef = oList.getDomRef();
-                    if (oDomRef) {
-                        const oContainer = oDomRef.closest(".chatContainer");
-                        if (oContainer) oContainer.scrollTop = oContainer.scrollHeight;
-                    }
+                const oScroller = this.byId("chatContainer");
+                if (oScroller) {
+                    const oDomRef = oScroller.getDomRef();
+                    if (oDomRef) oDomRef.scrollTop = oDomRef.scrollHeight;
                 }
             }, 100);
         }

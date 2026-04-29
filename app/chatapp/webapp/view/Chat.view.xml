@@ -14,7 +14,7 @@
             </Bar>
         </customHeader>
         <content>
-            <VBox id="chatContainer" class="chatContainer" fitContainer="true">
+            <ScrollContainer id="chatContainer" class="chatContainer" height="100%" width="100%" vertical="true" horizontal="false">
                 <List id="messageList"
                     items="{chat>/messages}"
                     showNoData="false"
@@ -34,7 +34,7 @@
                         <BusyIndicator id="loadingIndicator" size="1rem"/>
                     </VBox>
                 </VBox>
-            </VBox>
+            </ScrollContainer>
         </content>
         <footer>
             <Bar id="footerBar" class="chatFooter">
