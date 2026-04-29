@@ -14,21 +14,12 @@
   "devDependencies": {
     "@cap-js/sqlite": "^2",
     "@sap/cds-dk": "^9",
-    "cds-plugin-ui5": "^0.13.0",
     "xlsx": "^0.18.5"
   },
   "scripts": {
-    "start": "cds-serve",
-    "watch-warranty-claims": "cds watch --open warrantyclaims/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "test": "cds watch --profile test --open warranty-claims/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "start": "cds-serve"
   },
   "private": true,
-  "workspaces": [
-    "app/*"
-  ],
-  "sapux": [
-    "app/warranty-claims"
-  ],
   "cds": {
     "requires": {
       "[production]": {
