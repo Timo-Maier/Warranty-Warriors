@@ -24,4 +24,4 @@ function createMaterialNumberTool() {
     );
 }
 
-module.exports = { createVectorSearchTool };
+module.exports = { createMaterialNumberTool };

@@ -3,7 +3,7 @@
 const { z } = require('zod');
 const cds = require('@sap/cds');
 
-function createSummarizeTool() {
+function createRetrieveLongTextsTool() {
     const { tool } = require('@langchain/core/tools');
 
     return tool(
@@ -27,4 +27,4 @@ function createSummarizeTool() {
     );
 }
 
-module.exports = { createSummarizeTool };
+module.exports = { createRetrieveLongTextsTool };

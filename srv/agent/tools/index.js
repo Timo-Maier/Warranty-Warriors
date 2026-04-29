@@ -1,5 +1,9 @@
 'use strict';
 
-const { createSummarizeTool } = require('./summarize');
 
-module.exports = { createVectorSearchTool, createSummarizeTool };
+module.exports = { 
+    ...require('./fetchClaims'),
+    ...require('./retrieveMatNr'),
+    ...require('./retrieveLongTexts'),
+    ...require('./summarize'),
+};
