@@ -23,7 +23,7 @@ function createLongTextsFromClaimIdsTool() {
                     chunks.map(chunk => SELECT.from(ClaimLongText).where({ claim: { in: chunk } }).columns('longText'))
                 );
                 const resultingLongTexts = [...new Set(results.flat().map(claim => claim.longText))]
-                const subResults = resultingLongTexts.slice(0, 100);
+                const subResults = resultingLongTexts.slice(0, 50);
                 return subResults
             } catch(e) {
                 console.log(e)

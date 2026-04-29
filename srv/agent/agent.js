@@ -26,7 +26,7 @@
 const { createTools } = require('./tools');
 
 // Model name as registered in SAP Generative AI Hub
-const MODEL_NAME = 'anthropic--claude-4.6-sonnet';
+const MODEL_NAME = 'anthropic--claude-4.6-opus';
 
 // Singleton: one compiled agent with one shared checkpointer for all sessions
 let _agent = null;

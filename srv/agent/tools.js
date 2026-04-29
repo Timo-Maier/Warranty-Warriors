@@ -5,14 +5,16 @@ const { createClaimIdsTool } = require('./tools/fetchClaims');
 const { createMaterialNumberTool } = require('./tools/retrieveMatNr');
 const { createRetrieveLongTextsTool } = require('./tools/retrieveLongTexts');
 const { createLongTextsFromClaimIdsTool } = require('./tools/fetchLongTextsFromClaims');
+const { createFetchAnalysisFromClaimsTool } = require('./tools/fetchAnalysisFromClaims');
 
 function createTools(db) {
     return [
-        createSummarizeTool(),
+        // createSummarizeTool(),
         // createClaimIdsTool(),
         createMaterialNumberTool(),
         createRetrieveLongTextsTool(),
-        createLongTextsFromClaimIdsTool()
+        // createLongTextsFromClaimIdsTool(),
+        createFetchAnalysisFromClaimsTool()
     ];
 }
 

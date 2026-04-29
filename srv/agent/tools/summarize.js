@@ -4,7 +4,7 @@ const { z } = require('zod');
 
 const SUMMARIZE_PROMPT = `You are an automotive warranty analyst. Given a list of workshop long texts from warranty claims, summarize the fault pattern and identify recurring issues. The texts may be in multiple languages (German, English, Turkish, Spanish, Polish, Czech, Hungarian, Swedish, Norwegian, French, Italian, Finnish). Respond in English with a structured summary.`;
 
-const MODEL_NAME = 'anthropic--claude-4.6-sonnet';
+const MODEL_NAME = 'anthropic--claude-4.6-opus';
 
 function createSummarizeTool() {
     const { tool } = require('@langchain/core/tools');
