@@ -21,3 +21,12 @@ entity Reports : cuid {
   additional_info_found : String;
   copy_of_casedescription_for_vlookup : String;
 }
+
+entity ClaimLongText {
+  key claim : String;
+    longText : String(5000);
+    @cds.api.ignore
+    embedding : Vector = VECTOR_EMBEDDING(
+            longText, 'DOCUMENT', 'SAP_NEB.20240715'
+        ) stored;
+}
