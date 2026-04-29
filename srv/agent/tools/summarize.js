@@ -33,12 +33,12 @@ function createSummarizeTool() {
         {
             name: 'summarize_claims',
             description:
-                'Summarizes a list of warranty claim long texts and identifies recurring fault patterns. Pass the longText values from vector_search_claims results.',
+                'Summarizes and analyzes a list of claim long texts and identifies patterns. Pass the longText values from fetch_long_text_from_material_numbers results.',
             schema: z.object({
                 longTexts: z
                     .array(z.string())
                     .min(1)
-                    .describe('Array of workshop long text strings to summarize'),
+                    .describe('Array of claim long text strings to summarize'),
             }),
         }
     );
