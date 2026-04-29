@@ -3,7 +3,7 @@
 const { z } = require('zod');
 const getMatNr = require('../../utils/getMatNr');
 
-function createVectorSearchTool(db) {
+function createMaterialNumberTool() {
     const { tool } = require('@langchain/core/tools');
 
     return tool(
