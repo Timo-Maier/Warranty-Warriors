@@ -1,1 +1,142 @@
-/* Enter your custom styles here */
+/* ── Page & header ─────────────────────────────────────────── */
+.chatPage {
+    background-color: #f0f7f0;
+}
+
+.chatPage > .sapMPageHeader,
+.chatPage .sapMBar {
+    background-color: #46AF28 !important;
+    border-bottom: none;
+}
+
+.chatPage .sapMBarMiddle .sapMTitle,
+.chatPage .sapMBarMiddle .sapMTitleStyleH4,
+.chatPage .sapMPageHeader .sapMTitle {
+    color: #ffffff !important;
+}
+
+.chatPage .sapMPageHeader .sapMBtn .sapMBtnIcon,
+.chatPage .sapMPageHeader .sapMBtn .sapMBtnInner {
+    color: #ffffff !important;
+}
+
+/* ── Scrollable message area ───────────────────────────────── */
+.chatContainer {
+    height: 100%;
+    overflow-y: auto;
+    padding: 1.25rem 1.5rem;
+    box-sizing: border-box;
+    background-color: #f0f7f0;
+}
+
+.chatMessageList {
+    background: transparent;
+}
+
+.chatMessageList .sapMLIB {
+    background: transparent;
+    border: none;
+    padding: 0.35rem 0;
+}
+
+.chatMessageList .sapMLIB:hover {
+    background: transparent;
+}
+
+/* ── Bubbles ───────────────────────────────────────────────── */
+.chatBubble {
+    max-width: 68%;
+    padding: 0.75rem 1rem;
+    border-radius: 1.25rem;
+    word-break: break-word;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.chatBubbleUser {
+    background-color: #46AF28;
+    border-bottom-right-radius: 0.25rem;
+    align-items: flex-end;
+}
+
+.chatBubbleUser .chatBubbleText {
+    color: #ffffff;
+}
+
+.chatBubbleAssistant {
+    background-color: #ffffff;
+    border: 1px solid #c8e6c9;
+    border-bottom-left-radius: 0.25rem;
+    align-items: flex-start;
+}
+
+.chatBubbleAssistant .chatBubbleText {
+    color: #1a1a1a;
+}
+
+.chatBubbleLoading {
+    padding: 0.75rem 1.25rem;
+}
+
+.chatBubbleText {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+/* ── Loading bubble (outside list) ────────────────────────── */
+.chatItem {
+    display: flex;
+    width: 100%;
+    padding: 0.35rem 0;
+}
+
+.chatItemAssistant {
+    justify-content: flex-start;
+}
+
+/* ── Footer input bar ──────────────────────────────────────── */
+.chatFooter {
+    background-color: #ffffff !important;
+    border-top: 2px solid #c8e6c9;
+    padding: 0.75rem 1rem;
+}
+
+.chatFooter .sapMBarMiddle {
+    width: 100%;
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 0.5rem;
+}
+
+.chatInput {
+    flex: 1;
+    max-width: 36rem;
+    min-height: 2.75rem;
+    border-radius: 1.5rem;
+    border: 1.5px solid #81c784 !important;
+    background: #f9fdf9 !important;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.95rem;
+}
+
+.chatInput:focus-within {
+    border-color: #46AF28 !important;
+    box-shadow: 0 0 0 2px rgba(45,122,58,0.15);
+}
+
+.chatSendButton {
+    flex-shrink: 0;
+    border-radius: 50% !important;
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    min-width: unset !important;
+    background-color: #46AF28 !important;
+    border-color: #46AF28 !important;
+    margin-right: 0.6rem !important;
+}
+
+.chatSendButton .sapMBtnIcon {
+    color: #ffffff !important;
+}

@@ -1,7 +1,60 @@
 <mvc:View controllerName="chatapp.controller.Chat"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-        <content />
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Page id="page" title="{i18n>title}" class="chatPage">
+        <customHeader>
+            <Bar id="headerBar">
+                <contentLeft>
+                    <Title id="headerTitle" text="Warranty Claims Assistant" level="H4"/>
+                </contentLeft>
+                <contentRight>
+                    <Button id="clearButton" icon="sap-icon://delete" tooltip="Clear chat" press=".onClearChat" type="Transparent"/>
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <content>
+            <VBox id="chatContainer" class="chatContainer" fitContainer="true">
+                <List id="messageList"
+                    items="{chat>/messages}"
+                    showNoData="false"
+                    class="chatMessageList">
+                    <CustomListItem id="messageItem">
+                        <FlexBox id="messageRow"
+                            justifyContent="{= ${chat>role} === 'user' ? 'End' : 'Start' }"
+                            width="100%">
+                            <VBox id="messageBubble" class="{= ${chat>role} === 'user' ? 'chatBubble chatBubbleUser' : 'chatBubble chatBubbleAssistant' }">
+                                <Text id="messageText" text="{chat>content}" wrapping="true" class="chatBubbleText"/>
+                            </VBox>
+                        </FlexBox>
+                    </CustomListItem>
+                </List>
+                <VBox id="loadingBubble" visible="{chat>/loading}" class="chatItem chatItemAssistant">
+                    <VBox id="loadingInner" class="chatBubble chatBubbleAssistant chatBubbleLoading">
+                        <BusyIndicator id="loadingIndicator" size="1rem"/>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </content>
+        <footer>
+            <Bar id="footerBar" class="chatFooter">
+                <contentMiddle>
+                    <Button id="sendButton"
+                        icon="sap-icon://paper-plane"
+                        type="Emphasized"
+                        press=".onSendMessage"
+                        enabled="{= !!${chat>/input} &amp;&amp; !${chat>/loading} }"
+                        class=""/>
+                    <TextArea id="inputField"
+                        value="{chat>/input}"
+                        placeholder="Ask about warranty claims..."
+                        rows="1"
+                        growing="true"
+                        growingMaxLines="4"
+                        width="auto"
+                        class="chatInput"/>
+                </contentMiddle>
+            </Bar>
+        </footer>
     </Page>
 </mvc:View>

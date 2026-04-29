@@ -1,12 +1,73 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel"
 ],
-function (Controller) {
+function (Controller, JSONModel) {
     "use strict";
 
     return Controller.extend("chatapp.controller.Chat", {
         onInit: function () {
+            const oChatModel = new JSONModel({
+                messages: [],
+                input: "",
+                loading: false
+            });
+            this.getView().setModel(oChatModel, "chat");
+        },
 
+        onSendMessage: function () {
+            const oModel = this.getView().getModel("chat");
+            const sInput = (oModel.getProperty("/input") || "").trim();
+            if (!sInput || oModel.getProperty("/loading")) return;
+
+            // Add user message
+            const aMessages = oModel.getProperty("/messages");
+            aMessages.push({ role: "user", content: sInput });
+            oModel.setProperty("/messages", aMessages);
+            oModel.setProperty("/input", "");
+            oModel.setProperty("/loading", true);
+
+            this._scrollToBottom();
+
+            // Call the OData action
+            const oODataModel = this.getView().getModel();
+            const oAction = oODataModel.bindContext("/analyzeWarrantyClaims(...)");
+            oAction.setParameter("query", sInput);
+
+            oAction.execute().then(() => {
+                const sResult = oAction.getBoundContext().getObject().value;
+                const aUpdated = oModel.getProperty("/messages");
+                aUpdated.push({ role: "assistant", content: sResult });
+                oModel.setProperty("/messages", aUpdated);
+                oModel.setProperty("/loading", false);
+                this._scrollToBottom();
+            }).catch(() => {
+                const aUpdated = oModel.getProperty("/messages");
+                aUpdated.push({ role: "assistant", content: "An error occurred. Please try again." });
+                oModel.setProperty("/messages", aUpdated);
+                oModel.setProperty("/loading", false);
+                this._scrollToBottom();
+            });
+        },
+
+        onClearChat: function () {
+            const oModel = this.getView().getModel("chat");
+            oModel.setProperty("/messages", []);
+            oModel.setProperty("/input", "");
+            oModel.setProperty("/loading", false);
+        },
+
+        _scrollToBottom: function () {
+            setTimeout(() => {
+                const oList = this.byId("messageList");
+                if (oList) {
+                    const oDomRef = oList.getDomRef();
+                    if (oDomRef) {
+                        const oContainer = oDomRef.closest(".chatContainer");
+                        if (oContainer) oContainer.scrollTop = oContainer.scrollHeight;
+                    }
+                }
+            }, 100);
         }
     });
 });
