@@ -1,10 +1,10 @@
-import { tool } from '@langchain/core/tools';
-import { z } from 'zod';
-import { createRequire } from 'module';
+'use strict';
 
-const require = createRequire(import.meta.url);
+const { z } = require('zod');
 
-export function createVectorSearchTool(db) {
+function createVectorSearchTool(db) {
+    const { tool } = require('@langchain/core/tools');
+
     return tool(
         async ({ query, limit = 5 }) => {
             try {
@@ -42,3 +42,5 @@ export function createVectorSearchTool(db) {
         }
     );
 }
+
+module.exports = { createVectorSearchTool };

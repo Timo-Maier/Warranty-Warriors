@@ -1,6 +1,7 @@
 'use strict';
 
 const cds = require('@sap/cds');
+const { createAgent } = require('./agent/agent');
 
 module.exports = class AgentService extends cds.ApplicationService {
     async init() {
@@ -8,10 +9,9 @@ module.exports = class AgentService extends cds.ApplicationService {
             const { query } = req.data;
             if (!query) return req.reject(400, 'query parameter is required');
 
-            const { createAgent } = await import('./agent/agent.mjs');
             const { HumanMessage } = await import('@langchain/core/messages');
 
-            const agent = createAgent(cds.db);
+            const agent = await createAgent(cds.db);
             const result = await agent.invoke({
                 messages: [new HumanMessage(query)],
             });

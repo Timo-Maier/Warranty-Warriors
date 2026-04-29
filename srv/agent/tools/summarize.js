@@ -1,11 +1,14 @@
-import { tool } from '@langchain/core/tools';
-import { z } from 'zod';
+'use strict';
 
-const MODEL_NAME = 'anthropic--claude-4.6-sonnet';
+const { z } = require('zod');
 
 const SUMMARIZE_PROMPT = `You are an automotive warranty analyst. Given a list of workshop long texts from warranty claims, summarize the fault pattern and identify recurring issues. The texts may be in multiple languages (German, English, Turkish, Spanish, Polish, Czech, Hungarian, Swedish, Norwegian, French, Italian, Finnish). Respond in English with a structured summary.`;
 
-export function createSummarizeTool() {
+const MODEL_NAME = 'anthropic--claude-4.6-sonnet';
+
+function createSummarizeTool() {
+    const { tool } = require('@langchain/core/tools');
+
     return tool(
         async ({ longTexts }) => {
             const { OrchestrationClient } = await import('@sap-ai-sdk/langchain');
@@ -39,3 +42,5 @@ export function createSummarizeTool() {
         }
     );
 }
+
+module.exports = { createSummarizeTool };

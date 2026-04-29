@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Creates a compiled LangGraph ReAct agent backed by SAP AI Core.
  *
@@ -14,22 +16,25 @@
  *       }
  */
 
-import { OrchestrationClient } from '@sap-ai-sdk/langchain';
-import { createReactAgent } from '@langchain/langgraph/prebuilt';
-import { createTools } from './tools.mjs';
+const { createTools } = require('./tools');
 
 // Model name as registered in SAP Generative AI Hub
 const MODEL_NAME = 'anthropic--claude-4.6-sonnet';
 
-export function createAgent(db) {
+async function createAgent(db) {
+    const { OrchestrationClient } = await import('@sap-ai-sdk/langchain');
+    const { createReactAgent } = await import('@langchain/langgraph/prebuilt');
+
     const llm = new OrchestrationClient({
         promptTemplating: {
             model: {
                 name: MODEL_NAME,
                 params: { max_tokens: 4096 },
-            }
+            },
         },
     });
     const tools = createTools(db);
     return createReactAgent({ llm, tools });
 }
+
+module.exports = { createAgent };
