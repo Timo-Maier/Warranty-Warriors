@@ -35,7 +35,14 @@
             "test/data"
           ]
         }
-      }
+      },
+      "DATASPHERE": {
+        "kind": "rest",
+        "credentials": {
+          "destination": "mh-bdc-dsp-dev-warranty"
+        }
+      },
+      "destinations": true
     }
   }
 }

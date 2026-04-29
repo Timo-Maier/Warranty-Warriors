@@ -10,7 +10,7 @@ function createRetrieveLongTextsTool() {
         async ({ claimIDs }) => {
             console.log(`Retrieving long texts for claim IDs`);
             const { ClaimLongText } = cds.entities("warranty.warriors");
-            const claimLongText = await SELECT.from(ClaimLongText).where({ claim: claimIDs });
+            const claimLongText = await SELECT.from(ClaimLongText).where({ claim: { in: claimIDs } });
             return claimLongText.map(claim => claim.longText);
         },
         {

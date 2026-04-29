@@ -6,4 +6,5 @@ module.exports = {
     ...require('./retrieveMatNr'),
     ...require('./retrieveLongTexts'),
     ...require('./summarize'),
+    ...require('./fetchLongTextsFromClaims'),
 };

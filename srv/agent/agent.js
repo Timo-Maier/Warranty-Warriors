@@ -14,6 +14,13 @@
  *           "serviceurls": { "AI_API_URL": "https://<api-url>" }
  *         }
  *       }
+ *
+ * Session persistence:
+ *   MemorySaver keeps all thread histories in-process. Each unique thread_id
+ *   (user + sessionId) gets its own isolated message history that is replayed
+ *   automatically on every invoke() call.
+ *   To persist across restarts or CF instances, swap MemorySaver for
+ *   @langchain/langgraph-checkpoint-postgres and point it at a PostgreSQL DB.
  */
 
 const { createTools } = require('./tools');
@@ -21,9 +28,15 @@ const { createTools } = require('./tools');
 // Model name as registered in SAP Generative AI Hub
 const MODEL_NAME = 'anthropic--claude-4.6-sonnet';
 
-async function createAgent(db) {
+// Singleton: one compiled agent with one shared checkpointer for all sessions
+let _agent = null;
+
+async function getAgent(db) {
+    if (_agent) return _agent;
+
     const { OrchestrationClient } = await import('@sap-ai-sdk/langchain');
     const { createReactAgent } = await import('@langchain/langgraph/prebuilt');
+    const { MemorySaver } = await import('@langchain/langgraph');
 
     const llm = new OrchestrationClient({
         promptTemplating: {
@@ -33,8 +46,12 @@ async function createAgent(db) {
             },
         },
     });
+
     const tools = createTools(db);
-    return createReactAgent({ llm, tools });
+    const checkpointer = new MemorySaver();
+
+    _agent = createReactAgent({ llm, tools, checkpointSaver: checkpointer });
+    return _agent;
 }
 
-module.exports = { createAgent };
+module.exports = { getAgent };

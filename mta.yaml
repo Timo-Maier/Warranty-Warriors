@@ -26,6 +26,7 @@ modules:
     requires:
       - name: Whdi-shared
       - name: Warranty-Warriors-auth
+      - name: Warranty-destination
 
   - name: Warranty-Warriors-db-deployer
     type: hdb
@@ -54,3 +55,8 @@ resources:
           credential-types:
             - "binding-secret"
             - "x509"
+  - name: Warranty-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
