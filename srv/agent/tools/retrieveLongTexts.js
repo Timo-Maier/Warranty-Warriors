@@ -16,7 +16,7 @@ function createSummarizeTool() {
         {
             name: 'retrieve_claim_long_texts',
             description:
-                'Retrieve and return the long texts of claims based on the given claim ids. Pass the claimIDs values from vector_search_claims results.',
+                'Retrieve and return the long texts of claims based on the given claim ids. Pass the claimIDs values from fetch_claim_ids results.',
             schema: z.object({
                 claimIDs: z
                     .array(z.string())

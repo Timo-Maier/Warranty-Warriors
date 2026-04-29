@@ -26,7 +26,7 @@ function createSummarizeTool() {
             const combined = longTexts.join('\n---\n');
             const response = await client.invoke([
                 new SystemMessage(SUMMARIZE_PROMPT),
-                new HumanMessage(`Workshop texts:\n${combined}`),
+                new HumanMessage(`Can you analize the following long texts for me and give a report on potential issues or patterns:\n${combined}`),
             ]);
             return response.content;
         },
