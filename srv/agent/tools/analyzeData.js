@@ -34,7 +34,7 @@ function createAnalyzeDataTool() {
             const { EnrichedClaims } = this.entities;
             const claims = await SELECT.from(EnrichedClaims).limit({ rows: 1000 });
             const longTexts = [...new Set(
-                enrichedClaims.map(c => JSON.parse(c.value).longText)
+                claims.map(c => JSON.parse(c.value).longText)
             )];
             const combined = longTexts.join('\n---\n');
             const getAnalysis = await client.invoke([

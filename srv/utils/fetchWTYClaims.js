@@ -8,7 +8,7 @@ const fetchClaims = async (matNrs, useMhNr) => {
     return response.value.map(claim => {
         return {
             claimId: claim.AU_CLMNO,
-            country: claim.WTYMM_058,
+            country: claim._BIC_WTYMM_058,
             prodDate: claim.WM_PROD_D
         }
     });
