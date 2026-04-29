@@ -9,6 +9,16 @@ function createVectorSearchTool(db) {
     return tool(
         async ({ caseDesc }) => {
             return await getMatNr(caseDesc);
+        },
+        {
+            name: 'retrive_material_numbers',
+            description:
+                'Fetching the either the material numbers from Mann Hummel or the customer based on which material numbers are linked to more claims.',
+            schema: z.object({
+                caseDesc: z
+                    .string()
+                    .describe('Case Description for which the material numbers should be fetched.'),
+            }),
         }
     );
 }
