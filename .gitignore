@@ -35,3 +35,5 @@ mta_archives/
 @cds-models
 
 test/
+test.csv
+.env

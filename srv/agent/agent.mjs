@@ -23,9 +23,11 @@ const MODEL_NAME = 'anthropic--claude-4.6-sonnet';
 
 export function createAgent(db) {
     const llm = new OrchestrationClient({
-        llm: {
-            model_name: MODEL_NAME,
-            model_params: { max_tokens: 4096 },
+        promptTemplating: {
+            model: {
+                name: MODEL_NAME,
+                params: { max_tokens: 4096 },
+            }
         },
     });
     const tools = createTools(db);
