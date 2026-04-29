@@ -13,8 +13,8 @@ function createTools(db) {
         // createClaimIdsTool(),
         createMaterialNumberTool(),
         createRetrieveLongTextsTool(),
-        // createLongTextsFromClaimIdsTool(),
-        createFetchAnalysisFromClaimsTool()
+        createLongTextsFromClaimIdsTool(),
+        // createFetchAnalysisFromClaimsTool()
     ];
 }
 

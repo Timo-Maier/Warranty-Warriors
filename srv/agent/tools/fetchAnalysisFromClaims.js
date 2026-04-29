@@ -15,40 +15,61 @@ function createFetchAnalysisFromClaimsTool() {
     return tool(
         async ({ matNrs, useMhNr }) => {
             console.log(`Retrieving long texts for material numbers: ${matNrs} using Mann Hummel material number: ${useMhNr}`);
-            const claimNumbers = await fetchClaims(matNrs, useMhNr);
-            const { ClaimLongText } = cds.entities("warranty.warriors");
+            const claims = await fetchClaims(matNrs, useMhNr);
+            const claimNumbers = claims.map(claim => claim.claimId);
+            const { ClaimLongText, EnrichedClaims } = cds.entities("warranty.warriors");
             try {
                 const chunkSize = 5000;
                 const chunks = [];
                 for (let i = 0; i < claimNumbers.length; i += chunkSize) {
                     chunks.push(claimNumbers.slice(i, i + chunkSize));
                 }
-                const results = await Promise.all(
-                    chunks.map(chunk => SELECT.from(ClaimLongText).where({ claim: { in: chunk } }).columns('longText'))
+                const longTextResults = await Promise.all(
+                    chunks.map(chunk => SELECT.from(ClaimLongText).where({ claim: { in: chunk } }).columns('claim', 'longText'))
                 );
-                const resultingLongTexts = [...new Set(results.flat().map(claim => claim.longText))]
-                const subResults = resultingLongTexts.slice(0, 1000);
-                const { OrchestrationClient } = await import('@sap-ai-sdk/langchain');
-            const { HumanMessage, SystemMessage } = await import('@langchain/core/messages');
+                const longTextMap = new Map();
+                for (const row of longTextResults.flat()) {
+                    longTextMap.set(row.claim, row.longText);
+                }
 
-            const client = new OrchestrationClient({
-                promptTemplating: {
-                    model: {
-                        name: MODEL_NAME,
-                        params: { max_tokens: 2048 },
+                const enrichedClaims = claims
+                    .filter(claim => longTextMap.has(claim.claimId))
+                    .map(claim => ({
+                        claimId: claim.claimId,
+                        value: JSON.stringify({
+                            country: claim.country,
+                            prodDate: claim.prodDate,
+                            longText: longTextMap.get(claim.claimId)
+                        })
+                    }));
+
+                await UPSERT.into(EnrichedClaims).entries(enrichedClaims);
+
+                const longTexts = [...new Set(
+                    enrichedClaims.map(c => JSON.parse(c.value).longText)
+                )];
+                const subResults = longTexts.slice(0, 1000);
+                const { OrchestrationClient } = await import('@sap-ai-sdk/langchain');
+                const { HumanMessage, SystemMessage } = await import('@langchain/core/messages');
+
+                const client = new OrchestrationClient({
+                    promptTemplating: {
+                        model: {
+                            name: MODEL_NAME,
+                            params: { max_tokens: 2048 },
+                        },
                     },
-                },
-            });
-            const combined = subResults.join('\n---\n');
-            const response = await client.invoke([
-                new SystemMessage(SUMMARIZE_PROMPT),
-                new HumanMessage(`Can you analize the following long texts for me and give a report on potential issues or patterns:\n${combined}`),
-            ]);
+                });
+                const combined = subResults.join('\n---\n');
+                const response = await client.invoke([
+                    new SystemMessage(SUMMARIZE_PROMPT),
+                    new HumanMessage(`Can you analize the following long texts for me and give a report on potential issues or patterns:\n${combined}`),
+                ]);
                 return response.content
-            } catch(e) {
+            } catch (e) {
                 console.log(e)
             }
-            
+
         },
         {
             name: 'fetch_long_text_analysis_from_material_numbers',
