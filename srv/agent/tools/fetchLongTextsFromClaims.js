@@ -9,8 +9,11 @@ function createLongTextsFromClaimIdsTool() {
     const { tool } = require('@langchain/core/tools');
 
     return tool(
-        async ({ matNrs, useMhNr }) => {
-            console.log(`Retrieving long texts for material numbers: ${matNrs} using Mann Hummel material number: ${useMhNr}`);
+        async ({ matNrs, useMhNr, caseDescription }) => {
+            console.log(`Retrieving long texts for material numbers`);
+            if(!matNrs || matNrs.length === 0) {
+                throw new Error('No material numbers provided. Please run retrive_material_numbers to determine the material numbers.');
+            }
             const claims = await fetchClaims(matNrs, useMhNr);
             const claimNumbers = claims.map(claim => claim.claimId);
             const { ClaimLongText, EnrichedClaims } = cds.entities("warranty.warriors");
@@ -32,11 +35,10 @@ function createLongTextsFromClaimIdsTool() {
                     .filter(claim => longTextMap.has(claim.claimId))
                     .map(claim => ({
                         claimId: claim.claimId,
-                        value: JSON.stringify({
-                            country: claim.country,
-                            prodDate: claim.prodDate,
-                            longText: longTextMap.get(claim.claimId)
-                        })
+                        caseDescription,
+                        country: claim.country,
+                        productionDate: claim.prodDate,
+                        longText: longTextMap.get(claim.claimId)
                     }));
 
                 await UPSERT.into(EnrichedClaims).entries(enrichedClaims);
@@ -50,7 +52,7 @@ function createLongTextsFromClaimIdsTool() {
         {
             name: 'fetch_long_text_from_material_numbers',
             description:
-                'Get the long texts of the claims based on the referenced material numbers. Fetching either based on Mann Hummel material number or customer material number determined by boolean.',
+                'Get the long  and other data of the claims based on the referenced material numbers and storing them in the database. Fetching either based on Mann Hummel material number or customer material number determined by boolean.',
             schema: z.object({
                 matNrs: z
                     .array(z.string())
@@ -58,7 +60,10 @@ function createLongTextsFromClaimIdsTool() {
                     .describe('Array of material numbers to search for'),
                 useMhNr: z
                     .boolean()
-                    .describe('Boolean determining whether to use Mann Hummel material number or not (customer)')
+                    .describe('Boolean determining whether to use Mann Hummel material number or not (customer)'),
+                caseDescription: z
+                    .string()
+                    .describe('Case Description for which the material numbers should be fetched.'),
             }),
         }
     );

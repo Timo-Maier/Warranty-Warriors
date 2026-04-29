@@ -8,7 +8,7 @@ function createMaterialNumberTool() {
 
     return tool(
         async ({ caseDesc }) => {
-            console.log(`Retrieving material numbers for case description: ${caseDesc}`);
+            console.log(`Retrieving material numbers for case description`);
             return await getMatNr(caseDesc);
         },
         {

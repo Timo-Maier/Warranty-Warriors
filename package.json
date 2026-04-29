@@ -14,10 +14,12 @@
   "devDependencies": {
     "@cap-js/sqlite": "^2",
     "@sap/cds-dk": "^9",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "@sap/ux-specification": "UI5-1.147"
   },
   "scripts": {
-    "start": "cds-serve"
+    "start": "cds-serve",
+    "watch-chatapp": "cds watch --open chatapp/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "private": true,
   "cds": {

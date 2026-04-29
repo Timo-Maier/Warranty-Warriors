@@ -42,7 +42,7 @@ async function getAgent(db) {
         promptTemplating: {
             model: {
                 name: MODEL_NAME,
-                params: { max_tokens: 4096 },
+                params: { max_tokens: 64000 },
             },
         },
     });

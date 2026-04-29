@@ -34,5 +34,8 @@ entity ClaimLongText {
 
 entity EnrichedClaims {
   key claimId : String;
-      value   : LargeString;
+  key caseDescription : String;
+      country: String;
+      productionDate: String;
+      longText: String(5000);
 }
