@@ -1,5 +1,7 @@
+const cds = require('@sap/cds');
+
 const getMatNr = async (caseDesc) => {
-    const { Reports } = this.entities;
+    const { Reports } = cds.entities('warranty.warriors');
 
     const mhRows = await SELECT`matNrMH, claimsCount`.from(Reports)
         .where({ caseDescription: caseDesc, matNrMH: { '!=': 'PWYEMA1000' } });
@@ -23,4 +25,4 @@ const getMatNr = async (caseDesc) => {
     };
 }
 
-module.exports(getMatNr);
+module.exports = getMatNr;

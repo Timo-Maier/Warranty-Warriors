@@ -27,4 +27,4 @@ function createClaimIdsTool() {
     );
 }
 
-module.exports = { createVectorSearchTool };
+module.exports = { createClaimIdsTool };

@@ -8,3 +8,5 @@ const fetchClaims = async (matNrs, useMhNr) => {
 
     }
 }
+
+module.exports = fetchClaims;

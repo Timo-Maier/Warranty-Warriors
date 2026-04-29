@@ -1,12 +1,16 @@
 'use strict';
 
-const { createVectorSearchTool } = require('./tools/vectorSearch');
 const { createSummarizeTool } = require('./tools/summarize');
+const { createClaimIdsTool } = require('./tools/fetchClaims');
+const { createMaterialNumberTool } = require('./tools/retrieveMatNr');
+const { createRetrieveLongTextsTool } = require('./tools/retrieveLongTexts');
 
 function createTools(db) {
     return [
-        createVectorSearchTool(db),
         createSummarizeTool(),
+        createClaimIdsTool(),
+        createMaterialNumberTool(),
+        createRetrieveLongTextsTool(),
     ];
 }
 
