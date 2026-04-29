@@ -14,10 +14,10 @@ class ClaimService extends cds.ApplicationService {
         const caseDesc = req.query.SELECT.where?.[2]?.val;
         if (!caseDesc) return req.reject(400, 'caseDescription filter is required');
 
-        const mhRows = await SELECT.from(Reports)
+        const mhRows = await SELECT `matNrMH, claimsCount`.from(Reports)
             .where({ caseDescription: caseDesc, matNrMH: { '!=': 'PWYEMA1000' } });
 
-        const custRows = await SELECT.from(Reports)
+        const custRows = await SELECT `matNrCust, claimsCount`.from(Reports)
             .where({ caseDescription: caseDesc, matNrCust: { '!=': '#' } });
 
         const mhSum = mhRows.reduce((sum, r) => sum + (r.claimsCount || 0), 0);
