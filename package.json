@@ -19,7 +19,8 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-chatapp": "cds watch --open chatapp/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-chatapp": "cds watch --open chatapp/webapp/index.html?sap-ui-xx-viewCache=false",
+    "start:react": "cd app/chatapp-react && npm install && npm run dev"
   },
   "private": true,
   "cds": {
