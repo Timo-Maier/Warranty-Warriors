@@ -23,7 +23,7 @@
                         <FlexBox id="messageRow"
                             justifyContent="{= ${chat>role} === 'user' ? 'End' : 'Start' }"
                             width="100%">
-                            <VBox id="messageBubble" class="{= ${chat>role} === 'user' ? 'chatBubble chatBubbleUser' : 'chatBubble chatBubbleAssistant' }">
+                            <VBox id="messageBubble" class="{= ${chat>role} === 'user' ? 'chatBubble chatBubbleUser chatItem' : 'chatBubble chatBubbleAssistant chatItem' }">
                                 <Text id="messageText" text="{chat>content}" wrapping="true" class="chatBubbleText"/>
                             </VBox>
                         </FlexBox>

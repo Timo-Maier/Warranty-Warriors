@@ -47,36 +47,39 @@
 }
 
 /* ── Bubbles ───────────────────────────────────────────────── */
-.chatBubble {
+.chatBubble.sapMVBox {
     max-width: 68%;
     padding: 0.75rem 1rem;
     border-radius: 1.25rem;
     word-break: break-word;
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    min-width: 3rem;
 }
 
-.chatBubbleUser {
-    background-color: #46AF28;
+.chatBubbleUser.sapMVBox {
+    background-color: #46AF28 !important;
     border-bottom-right-radius: 0.25rem;
     align-items: flex-end;
 }
 
-.chatBubbleUser .chatBubbleText {
-    color: #ffffff;
+.chatBubbleUser .chatBubbleText,
+.chatBubbleUser .sapMText {
+    color: #ffffff !important;
 }
 
-.chatBubbleAssistant {
-    background-color: #ffffff;
-    border: 1px solid #c8e6c9;
+.chatBubbleAssistant.sapMVBox {
+    background-color: #ffffff !important;
+    border: 1px solid #c8e6c9 !important;
     border-bottom-left-radius: 0.25rem;
     align-items: flex-start;
 }
 
-.chatBubbleAssistant .chatBubbleText {
-    color: #1a1a1a;
+.chatBubbleAssistant .chatBubbleText,
+.chatBubbleAssistant .sapMText {
+    color: #1a1a1a !important;
 }
 
-.chatBubbleLoading {
+.chatBubbleLoading.sapMVBox {
     padding: 0.75rem 1.25rem;
 }
 

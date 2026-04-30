@@ -14,6 +14,12 @@ function createAnalyzeDataTool() {
     return tool(
         async ({ scope, caseDescription, queryObject }) => {
             console.log(`Analyzing data.`);
+            const { EnrichedClaims } = cds.entities("warranty.warriors");
+            const formattedQueryObject = queryObject ? JSON.parse(queryObject) : {};
+            const claims = await SELECT.from(EnrichedClaims).where({caseDescription: caseDescription}).where(formattedQueryObject).limit(1000);
+            if (!claims) {
+                throw new Error('No claims currently exist for this case description. Run fetch_long_text_from_material_numbers to get the claims data first.');
+            }
 
             const { OrchestrationClient } = await import('@sap-ai-sdk/langchain');
             const { HumanMessage, SystemMessage } = await import('@langchain/core/messages');
@@ -31,12 +37,7 @@ function createAnalyzeDataTool() {
                 new HumanMessage(`Write a prompt that analyzes data that stores a long text description, country and production date of a warranty claim based on this scope. Output only the prompt itself and nothing else: ${scope}`),
             ]);
             const scopedPrompt = getScopedPrompt.content;
-            const { EnrichedClaims } = cds.entities("warranty.warriors");
-            const formattedQueryObject = queryObject ? JSON.parse(queryObject) : {};
-            const claims = await SELECT.from(EnrichedClaims).where({caseDescription: caseDescription}).where(formattedQueryObject).limit(1000);
-            if (!claims) {
-                throw new Error('No claims currently exist for this case description. Run fetch_long_text_from_material_numbers to get the claims data first.');
-            }
+            
             const stringifiedClaims = claims.map(claim => JSON.stringify(claim));
             const combined = stringifiedClaims.join('\n---\n');
             const getAnalysis = await client.invoke([

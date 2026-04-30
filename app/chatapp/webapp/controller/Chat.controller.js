@@ -13,6 +13,21 @@ function (Controller, JSONModel) {
                 loading: false
             });
             this.getView().setModel(oChatModel, "chat");
+
+            // Attach keydown after rendering so the textarea DOM exists
+            this.getView().addEventDelegate({
+                onAfterRendering: () => {
+                    const oTextArea = this.byId("inputField");
+                    if (oTextArea) {
+                        oTextArea.getFocusDomRef()?.addEventListener("keydown", (oEvent) => {
+                            if (oEvent.key === "Enter" && !oEvent.shiftKey) {
+                                oEvent.preventDefault();
+                                this.onSendMessage();
+                            }
+                        });
+                    }
+                }
+            }, this);
         },
 
         onSendMessage: function () {
