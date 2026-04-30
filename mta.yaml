@@ -24,7 +24,7 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      - name: Whdi-shared
+      - name: hdi-shared
       - name: Warranty-Warriors-auth
       - name: Warranty-destination
 
