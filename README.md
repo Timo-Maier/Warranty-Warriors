@@ -1,4 +1,4 @@
-# Warranty Warriors
+# Warranty Warriors v2
 
 An AI-powered warranty claims analysis tool built on SAP CAP (Cloud Application Programming Model). A LangGraph ReAct agent analyzes warranty claims by querying a local database, fetching enriched data from SAP Datasphere, and running AI analysis via SAP AI Core (Claude Opus).
 
